@@ -10,36 +10,29 @@
  */
 void selection_sort(int *array, size_t size)
 {
-        size_t min_idx, temp, i, j;
+	size_t min_idx, temp, i, j;
 
-	if (size < 2 || array == NULL)
+	if (size < 2)
+		return;
+	for (i = 0; i < size - 1; i++)
 	{
-		print_array(array, size);
-	}
-
-	print_array(array, size);
-
-        for (i = 0; i < size - 1; i++)
-        {
-                /** assuming the smallest value is at idx i */
-                min_idx = i;
-                for (j = i + 1; j < size; j++)
-                {
-                        /**change idx when another small found*/
+		/** assuming the smallest value is at idx i */
+		min_idx = i;
+		for (j = i + 1; j < size; j++)
+		{
+			/**change idx when another small found*/
 			if (array[j] < array[min_idx])
-                        {
-                                min_idx = j;
-                        }
-                }
-                /**Finally swap the values in the indexes*/
-                
+			{
+				min_idx = j;
+			}
+		}
+		/**Finally swap the values in the indexes*/
 		if (min_idx != i)
-                {
-                        temp = array[i];
-                        array[i] = array[min_idx];
-                        array[min_idx] = temp;
+		{
+			temp = array[i];
+			array[i] = array[min_idx];
+			array[min_idx] = temp;
 			print_array(array, size);
-
-                }
-        }
+		}
+	}
 }
