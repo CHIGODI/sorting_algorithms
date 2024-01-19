@@ -1,4 +1,29 @@
 #include "sort.h"
+
+/**
+ * list_size - finds size of doubly linked list
+ * @list: list to find size
+ *
+ * Return: size
+ *
+ */
+size_t list_size(listint_t **list)
+{
+	size_t count = 0;
+	listint_t *temp;
+
+	if (*list == NULL)
+		return (0);
+
+	temp = *list;
+	while (temp != NULL)
+	{
+		count++;
+		temp = temp->next;
+	}
+	return (count);
+}
+
 /**
  * insertion_sort_list - sorts a list in ascending order
  * @list: list to be sorted
@@ -9,9 +34,12 @@
 void insertion_sort_list(listint_t **list)
 {
 	listint_t *temp, *loop;
+	size_t size = list_size(list);
+
+	if (size < 2)
+		return;
 
 	temp = (*list)->next;
-	print_list(*list);
 	while (temp != NULL)
 	{
 		loop = temp->prev;
