@@ -12,7 +12,7 @@ size_t list_size(listint_t **list)
 	size_t count = 0;
 	listint_t *temp;
 
-	if (*list == NULL)
+	if (*list == NULL || (*list)->next == NULL || list == NULL)
 		return (0);
 
 	temp = *list;
