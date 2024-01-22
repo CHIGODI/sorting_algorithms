@@ -8,7 +8,7 @@
  * Return: Nothing
  */
 
-void shell_sort(int *array, size_t size) 
+void shell_sort(int *array, size_t size)
 {
 	size_t i, j, gap;
 	int temp;
