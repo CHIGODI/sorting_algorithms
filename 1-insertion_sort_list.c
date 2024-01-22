@@ -1,66 +1,60 @@
+#include <stdio.h>
 #include "sort.h"
-
 /**
- * list_size - finds size of doubly linked list
- * @list: list to find size
- *
- * Return: size
- *
+ * swap - swap two nodes in the doubly linked list
+ * @head: pointer to the head node
+ * @first_node: pointer to the first node
+ * @second_node: pointer to the second node
+ * Return: nothing!
  */
-size_t list_size(listint_t **list)
+
+void swap(listint_t **head, listint_t **first_node, listint_t *second_node)
 {
-	size_t count = 0;
-	listint_t *temp;
+	(*first_node)->next = second_node->next;
 
-	if (*list == NULL || (*list)->next == NULL || list == NULL)
-		return (0);
-
-	temp = *list;
-	while (temp != NULL)
+	if (second_node->next)
 	{
-		count++;
-		temp = temp->next;
+		second_node->next->prev = *first_node;
 	}
-	return (count);
+	second_node->prev = (*first_node)->prev;
+	second_node->next = *first_node;
+
+	if ((*first_node)->prev)
+	{
+		(*first_node)->prev->next = second_node;
+	}
+	else
+	{
+		*head = second_node;
+	}
+
+	(*first_node)->prev = second_node;
+	*first_node = second_node->prev;
 }
 
 /**
- * insertion_sort_list - sorts a list in ascending order
- * @list: list to be sorted
- *
+ * insertion_sort_list - uses insertion sort algorithm to sort a list
+ * of numbers in a doubly linked list
+ * @list: pointer to the head of the list
  * Return: Nothing!
- *
  */
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *temp, *loop;
-	size_t size = list_size(list);
+	listint_t *current, *tmp, *new;
 
-	if (size < 2)
-		return;
-
-	temp = (*list)->next;
-	while (temp != NULL)
+	if (list && *list && (*list)->next)
 	{
-		loop = temp->prev;
-		while (loop != NULL && loop->n > temp->n)
+		current = (*list)->next;
+		while (current)
 		{
-			if (loop->prev != NULL)
-				loop->prev->next = temp;
-			if (temp->next != NULL)
-				temp->next->prev = loop;
-
-			loop->next = temp->next;
-			temp->prev = loop->prev;
-			loop->prev = temp;
-			temp->next = loop;
-			if (temp->prev == NULL)
+			tmp = current->next;
+			new = current->prev;
+			while (new && current->n < new->n)
 			{
-				*list = temp;
+				swap(list, &new, current);
+				print_list((const listint_t *)*list);
 			}
-			loop = temp->prev;
-			print_list(*list);
+			current = tmp;
 		}
-		temp = temp->next;
 	}
 }
